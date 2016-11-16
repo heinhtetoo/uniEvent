@@ -1,4 +1,6 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.data.Model;
+
+import com.sd.heinhtetoo.mytestapp.data.Event;
 
 import java.util.ArrayList;
 
@@ -6,17 +8,17 @@ import java.util.ArrayList;
  * Created by HeinHtetOo on 14/11/2016.
  */
 
-public class EventModelImpl implements EventModel {
+public class DummyEventModelImpl implements EventModel {
 
     private static EventModel eventModel;
     private static ArrayList<Event> eventlist;
 
-    private EventModelImpl() {
+    private DummyEventModelImpl() {
     }
 
     public static EventModel getInstance() {
         if(eventModel == null){
-            eventModel = new EventModelImpl();
+            eventModel = new DummyEventModelImpl();
             eventlist = createSampleEventList(13);
         }
         return eventModel;
@@ -32,6 +34,12 @@ public class EventModelImpl implements EventModel {
         return eventlist;
 
     }
+
+    @Override
+    public void getEvent(EventModelImpl.Callback c) {
+
+    }
+
     private static ArrayList<Event> createSampleEventList(int num) {
         ArrayList<Event> events = new ArrayList<>();
         String [] title = {"YU 96 Anniversary", "Independence Day Seminar", "YU Valentine", "Study in UK", "Google Dev Seminar","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title"};

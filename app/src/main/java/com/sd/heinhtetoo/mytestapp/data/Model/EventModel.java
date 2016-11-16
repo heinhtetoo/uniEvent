@@ -1,4 +1,6 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.data.Model;
+
+import com.sd.heinhtetoo.mytestapp.data.Event;
 
 import java.util.ArrayList;
 
@@ -8,5 +10,8 @@ import java.util.ArrayList;
 
 public interface EventModel {
     void saveEvent();
+
     ArrayList<Event> getEvent();
+
+    void getEvent(EventModelImpl.Callback c);
 }

@@ -1,6 +1,10 @@
 package com.sd.heinhtetoo.mytestapp;
 
+import com.sd.heinhtetoo.mytestapp.data.Event;
+
 import java.util.ArrayList;
+
+import io.realm.RealmList;
 
 /**
  * Created by HeinHtetOo on 14/11/2016.
@@ -8,7 +12,7 @@ import java.util.ArrayList;
 
 public interface EventContract {
     interface eventView {
-        void showList(ArrayList<Event> eList);
+        void showList(RealmList<Event> eList);
         void hideList();
     }
 

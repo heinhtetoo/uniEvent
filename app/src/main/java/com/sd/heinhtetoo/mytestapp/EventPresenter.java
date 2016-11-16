@@ -1,6 +1,12 @@
 package com.sd.heinhtetoo.mytestapp;
 
+import com.sd.heinhtetoo.mytestapp.data.Event;
+import com.sd.heinhtetoo.mytestapp.data.Model.EventModel;
+import com.sd.heinhtetoo.mytestapp.data.Model.EventModelImpl;
+
 import java.util.ArrayList;
+
+import io.realm.RealmList;
 
 /**
  * Created by HeinHtetOo on 14/11/2016.
@@ -17,8 +23,18 @@ public class EventPresenter implements EventContract.eventPresenter {
 
     @Override
     public void initPresenter() {
-        ArrayList<Event> eventArrayList = eModel.getEvent();
-        eView.showList(eventArrayList);
+         eModel.getEvent(new EventModelImpl.Callback() {
+            @Override
+            public void onSuccess(RealmList<Event> events) {
+                eView.showList(events);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+
     }
 
     @Override

@@ -1,0 +1,100 @@
+package com.sd.heinhtetoo.mytestapp.api;
+
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sd.heinhtetoo.mytestapp.data.EventResponse;
+import com.sd.heinhtetoo.mytestapp.data.Serializer.EventResponseSerializer;
+import com.sd.heinhtetoo.mytestapp.data.Serializer.EventSerializer;
+
+
+import java.util.concurrent.TimeUnit;
+
+import io.realm.EventRealmProxy;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * Created by hhtet on 3/17/16.
+ */
+public class RetrofitClient {
+
+
+    public static String URL = APIConfig.BASE_URL;
+    private static RetrofitClient mInstance;
+    private RetrofitService mService;
+
+    private RetrofitClient() {
+        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        final OkHttpClient httpClient;
+
+
+        httpClient = new OkHttpClient().newBuilder()
+                .readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
+
+                .build();
+
+
+        //this code is to work both Realm and Gson
+      Gson gson = null;
+        try {
+             gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+                        @Override
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return f.getDeclaringClass().equals(RealmObject.class);
+                        }
+
+                        @Override
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return false;
+                        }
+
+                    }).registerTypeAdapter(Class.forName("io.realm.EventRealmProxy"), new EventSerializer())
+                    .registerTypeAdapter(Class.forName("io.realm.EventResponseRealmProxy"), new EventResponseSerializer())
+
+                    .create();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(httpClient)
+                    .build();
+
+            mService = retrofit.create(RetrofitService.class);
+
+
+
+
+    }
+
+    public static RetrofitClient getInstance() {
+        if (mInstance == null) {
+            mInstance = new RetrofitClient();
+        }
+        return mInstance;
+    }
+
+    public RetrofitService getService() {
+        return mService;
+    }
+
+}

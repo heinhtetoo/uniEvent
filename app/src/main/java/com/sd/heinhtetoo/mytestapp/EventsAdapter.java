@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sd.heinhtetoo.mytestapp.data.Event;
+
 import java.util.List;
 
 /**
