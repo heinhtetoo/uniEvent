@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Test App</string>
+    <string name="left_menu_events">Events</string>
+    <string name="left_menu_time_tables">Time Tables</string>
+    <string name="left_menu_saved_events">Saved Events</string>
+    <string name="left_menu_home">Home</string>
+    <string name="action_settings">Settings</string>
 </resources>
