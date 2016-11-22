@@ -45,7 +45,7 @@ public class RetrofitClient {
         httpClient = new OkHttpClient().newBuilder()
                 .readTimeout(15, TimeUnit.SECONDS)
                 .connectTimeout(15, TimeUnit.SECONDS)
-
+                .addInterceptor(logging)
                 .build();
 
 

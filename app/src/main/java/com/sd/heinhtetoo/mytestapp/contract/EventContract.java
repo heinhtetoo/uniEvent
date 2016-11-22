@@ -1,4 +1,4 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.contract;
 
 import com.sd.heinhtetoo.mytestapp.data.Event;
 

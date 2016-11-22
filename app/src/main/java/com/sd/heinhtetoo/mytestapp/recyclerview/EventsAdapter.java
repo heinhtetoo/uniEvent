@@ -1,4 +1,4 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sd.heinhtetoo.mytestapp.R;
 import com.sd.heinhtetoo.mytestapp.data.Event;
 
 import java.util.List;

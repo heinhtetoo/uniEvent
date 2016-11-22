@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface EventModel {
-    void saveEvent();
+    void saveEvent(Event e);
 
     ArrayList<Event> getEvent();
 

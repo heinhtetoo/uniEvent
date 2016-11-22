@@ -1,4 +1,4 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -24,8 +24,10 @@ public class DummyEventModelImpl implements EventModel {
         return eventModel;
     }
 
+
+
     @Override
-    public void saveEvent() {
+    public void saveEvent(Event e) {
 
     }
 

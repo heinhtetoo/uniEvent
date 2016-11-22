@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmList;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -31,8 +32,18 @@ public class EventModelImpl implements EventModel {
     }
 
     @Override
-    public void saveEvent() {
+    public void saveEvent(Event e) {
+        RetrofitClient.getInstance().getService().postEvent(e).enqueue(new retrofit2.Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

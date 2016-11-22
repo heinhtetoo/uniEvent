@@ -1,10 +1,9 @@
-package com.sd.heinhtetoo.mytestapp;
+package com.sd.heinhtetoo.mytestapp.Presenter;
 
+import com.sd.heinhtetoo.mytestapp.contract.EventContract;
 import com.sd.heinhtetoo.mytestapp.data.Event;
 import com.sd.heinhtetoo.mytestapp.data.Model.EventModel;
 import com.sd.heinhtetoo.mytestapp.data.Model.EventModelImpl;
-
-import java.util.ArrayList;
 
 import io.realm.RealmList;
 
