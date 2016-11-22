@@ -1,48 +1,83 @@
-package com.sd.heinhtetoo.mytestapp.ui;
+package com.sd.heinhtetoo.mytestapp;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
 
-import com.sd.heinhtetoo.mytestapp.contract.EventContract;
-import com.sd.heinhtetoo.mytestapp.Presenter.EventPresenter;
-import com.sd.heinhtetoo.mytestapp.data.Model.EventModel;
-import com.sd.heinhtetoo.mytestapp.recyclerview.EventsAdapter;
-import com.sd.heinhtetoo.mytestapp.R;
 import com.sd.heinhtetoo.mytestapp.data.Event;
 import com.sd.heinhtetoo.mytestapp.data.Model.EventModelImpl;
 
 import java.util.ArrayList;
 
-import io.realm.Realm;
 import io.realm.RealmList;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
-public class MainActivity extends AppCompatActivity implements EventContract.eventView {
+public class MainActivity extends AppCompatActivity implements EventContract.eventView,NavigationView.OnNavigationItemSelectedListener {
     ArrayList<Event> events;
     private RecyclerView recyclerViewEvent;
-    private Button btn_requestData;
-    private EventModel model;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        Menu leftMenu = navigationView.getMenu();
+        navigationView.setNavigationItemSelectedListener(this);
 
         recyclerViewEvent = (RecyclerView) findViewById(R.id.view_event);
-        btn_requestData = (Button) findViewById(R.id.btn_postData);
-        model =EventModelImpl.getInstance();
-        EventContract.eventPresenter eventPresenter = new EventPresenter(model, this);
+
+
+        EventContract.eventPresenter eventPresenter = new EventPresenter(EventModelImpl.getInstance(), this);
 
         eventPresenter.initPresenter();
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.action_settings:
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+
+        return true;
     }
 
     @Override
@@ -50,9 +85,8 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
         final EventsAdapter adapter = new EventsAdapter(this, eList);
 
         recyclerViewEvent.setAdapter(adapter);
-        recyclerViewEvent.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewEvent.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerViewEvent.setItemAnimator(new SlideInUpAnimator(new LinearInterpolator()));
-
 
     }
 
@@ -62,12 +96,10 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        item.setChecked(true);
+        drawerLayout.closeDrawers();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 }

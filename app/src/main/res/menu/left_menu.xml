@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/left_menu_har_tha_pa_day_thar"
+            android:checked="true"
+            android:title="@string/left_menu_events"
+            />
+
+        <item
+            android:id="@+id/left_menu_phandeeyar"
+            android:title="@string/left_menu_time_tables"/>
+
+        <item
+            android:id="@+id/left_menu_image_loading"
+            android:title="@string/left_menu_saved_events"/>
+
+        <item
+            android:id="@+id/drawer_settings"
+            android:title="@string/left_menu_home"/>
+
+    </group>
+</menu>
