@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/left_menu_header"
+        app:headerLayout="@layout/view_pod_account_control"
         app:itemIconTint="@drawable/state_left_menu_item"
         app:itemTextColor="@drawable/state_left_menu_item"
         app:menu="@menu/left_menu" />

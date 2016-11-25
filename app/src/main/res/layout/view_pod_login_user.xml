@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sd.heinhtetoo.mytestapp.ViewPodLoginUser xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_profile_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/drawer_background" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_overlay" />
+
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="@dimen/user_profile_image_size"
+        android:layout_height="@dimen/user_profile_image_size"
+        android:layout_marginLeft="@dimen/margin_medium_2"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/user_profile_margin_top"
+        android:layout_centerHorizontal="true"
+        android:elevation="4dp"
+        android:src="@drawable/drawer_background" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_user_name_margin_top"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_below="@+id/iv_profile"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/dummy_username"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/dummy_email"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:text="@string/lbl_logout" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/btn_logout"
+        android:text="Add Event"/>
+
+</com.sd.heinhtetoo.mytestapp.ViewPodLoginUser>
