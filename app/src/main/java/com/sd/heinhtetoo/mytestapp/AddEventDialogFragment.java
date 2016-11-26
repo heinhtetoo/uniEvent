@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.facebook.Profile;
+import com.sd.heinhtetoo.mytestapp.data.Event;
+import com.sd.heinhtetoo.mytestapp.data.Model.EventModel;
+import com.sd.heinhtetoo.mytestapp.data.Model.EventModelImpl;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +34,7 @@ import java.util.TimeZone;
 
 public class AddEventDialogFragment extends DialogFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
+    private static final String SIMPLE_DATE_FORMATE ="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" ;
     Button btnSubmit;
 
     EditText etName;
@@ -35,6 +42,14 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
     EditText etEventTime;
     EditText etPlace;
     EditText etDescription;
+    private String smin;
+    private String shour;
+
+    private int gmin;
+    private int ghour;
+    private int gday;
+    private int gyear;
+    private int gmonth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +122,11 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
             Toast.makeText(getContext(),"Complete The Form",Toast.LENGTH_SHORT).show();
         }else
         {
-            Toast.makeText(getContext(),"Success",Toast.LENGTH_SHORT).show();
+            String username = Profile.getCurrentProfile().getName();
+            String fid = Profile.getCurrentProfile().getId();
+            EventModelImpl.getInstance().postEvent(new Event("",name,place,eventTime,eventDate,getPublishedDate(),description,username,fid));
+            Toast.makeText(getContext(),"Successful",Toast.LENGTH_SHORT).show();
+            this.dismiss();
         }
 
     }
@@ -122,8 +141,10 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 //Month starts from zero
-                month += 1;
-                etEventDate.setText(year + "-" + month + "-" + day);
+                gyear = year;
+                gday = day;
+                gmonth = month + 1;
+                etEventDate.setText(year + "-" + gmonth + "-" + day);
             }
         }, year, month, day);
         datePickerDialog.show();
@@ -137,8 +158,11 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
         TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                String shour = "" + hour;
-                String smin = "" + min;
+                ghour = hour;
+                gmin = min;
+
+                shour = "" + hour;
+                smin = "" + min;
                 if (hour < 10) {
                     shour = "0" + hour;
                 }
@@ -167,6 +191,16 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
                 }
                 break;
         }
+    }
+
+    public String getPublishedDate(){
+        SimpleDateFormat format = new SimpleDateFormat(SIMPLE_DATE_FORMATE);
+
+        Calendar c = Calendar.getInstance();
+        c.set(gyear, gmonth, gday, ghour, gmin);
+        format.setTimeZone( c.getTimeZone());
+        String publishedDate = format.format(c.getTime());
+        return publishedDate;
     }
 
 
