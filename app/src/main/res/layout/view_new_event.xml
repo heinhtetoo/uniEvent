@@ -1,184 +1,131 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tv_event_instruction"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/margin_medium_2"
-        android:text="@string/add_event_view_instruction"
-        android:textAlignment="center"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/colorPrimary" />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/margin_medium_2">
 
-    <TextView
-        android:id="@+id/tv_event_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_event_instruction"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Name : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_event_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_medium_2"
+            android:text="@string/add_event_view_instruction"
+            android:textAlignment="center"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@color/colorPrimary" />
 
-    <EditText
-        android:id="@+id/et_event_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_medium_2"
-        android:layout_marginLeft="@dimen/margin_medium_2"
-        android:layout_below="@id/tv_event_name" />
+        <TextView
+            android:id="@+id/tv_event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_event_instruction"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:text="Name : "
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_event_start_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_event_name"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Start Date : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
+        <EditText
+            android:id="@+id/et_event_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_event_name"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium_2" />
 
-    <EditText
-        android:id="@+id/et_start_date"
-        android:layout_width="@dimen/et_date_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_event_name"
-        android:layout_toRightOf="@id/tv_event_start_date" />
+        <TextView
+            android:id="@+id/tv_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_event_name"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:text="Date : "
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_event_end_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_event_name"
-        android:layout_toRightOf="@id/et_start_date"
-        android:paddingLeft="@dimen/margin_medium"
-        android:text="End Date : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_end_date"
-        android:layout_width="@dimen/et_date_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_event_name"
-        android:layout_toRightOf="@id/tv_event_end_date" />
-
-    <TextView
-        android:id="@+id/tv_event_start_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_start_date"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Start Time : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_start_time"
-        android:layout_width="@dimen/et_date_width"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/et_start_date"
-        android:layout_below="@id/et_start_date"
-        android:layout_toRightOf="@id/tv_event_start_time" />
-
-    <TextView
-        android:id="@+id/tv_event_end_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_end_date"
-        android:layout_toRightOf="@id/et_start_time"
-        android:layout_alignLeft="@id/tv_event_end_date"
-        android:paddingLeft="@dimen/margin_medium"
-        android:text="End Time : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_end_time"
-        android:layout_width="@dimen/et_date_width"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/et_end_date"
-        android:layout_below="@id/et_end_date"
-        android:layout_toRightOf="@id/tv_event_end_time" />
-
-    <TextView
-        android:id="@+id/tv_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_start_time"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Place : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_place"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_place"
-        android:layout_marginRight="@dimen/margin_medium_2"
-        android:layout_marginLeft="@dimen/margin_medium_2"/>
-
-    <TextView
-        android:id="@+id/tv_tags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_place"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Tags : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_medium_2"
-        android:layout_marginLeft="@dimen/margin_medium_2"
-        android:layout_below="@id/tv_tags" />
-
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/et_tags"
-        android:paddingLeft="@dimen/margin_medium_2"
-        android:text="Description : "
-        android:textSize="@dimen/text_regular_2x"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/et_description"
-        android:gravity="top|left"
-        android:padding="@dimen/margin_small"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/tv_description"
-        android:layout_marginTop="@dimen/margin_small"
-        android:layout_marginLeft="@dimen/margin_medium_2"
-        android:layout_marginRight="@dimen/margin_medium_2"
-        android:background="@drawable/edit_text_desc_background"
-        />
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="submit"
-        android:background="@drawable/button_background"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_below="@id/et_description"
-        android:layout_centerHorizontal="true"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_submit"
-        android:text="i  End Date and End Time are optional"
-        android:textSize="@dimen/text_regular_2x"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/colorPrimary"/>
+        <EditText
+            android:id="@+id/et_event_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_event_date"
+            android:editable="false"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium_2" />
 
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_event_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_event_date"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:text="Time : "
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_event_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_event_time"
+            android:editable="false"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium_2" />
+
+
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_event_time"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:text="Place : "
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_place"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium_2" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_place"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:text="Description : "
+            android:textSize="@dimen/text_regular_2x"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_description"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/tv_description"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginRight="@dimen/margin_medium_2"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/edit_text_desc_background"
+            android:gravity="top|left"
+            android:padding="@dimen/margin_small" />
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_description"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:background="@drawable/button_background"
+            android:text="submit"
+            android:textColor="@android:color/white" />
+
+
+    </RelativeLayout>
+</ScrollView>

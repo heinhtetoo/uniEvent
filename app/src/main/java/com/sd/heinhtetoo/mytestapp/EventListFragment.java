@@ -6,6 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +24,7 @@ import io.realm.RealmList;
  * Created by Administrator's user on 26-Nov-16.
  */
 
-public class EventListFragment extends Fragment implements EventContract.eventView,View.OnClickListener{
+public class EventListFragment extends Fragment implements EventContract.eventView, View.OnClickListener {
 
     ArrayList<Event> events;
     private RecyclerView recyclerViewEvent;
@@ -66,9 +67,10 @@ public class EventListFragment extends Fragment implements EventContract.eventVi
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.fab_add_event)
-        {
-            Snackbar.make(coordinatorLayout,"New Event Added",Snackbar.LENGTH_SHORT).show();
+        if (view.getId() == R.id.fab_add_event) {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            AddEventDialogFragment addEventDialogFragment = new AddEventDialogFragment();
+            addEventDialogFragment.show(fragmentManager,"Add Event");
         }
     }
 }
