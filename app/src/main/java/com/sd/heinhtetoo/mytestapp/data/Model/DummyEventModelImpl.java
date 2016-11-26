@@ -40,6 +40,11 @@ public class DummyEventModelImpl implements EventModel {
 
     }
 
+    @Override
+    public void postEvent(Event e) {
+
+    }
+
     private static ArrayList<Event> createSampleEventList(int num) {
         ArrayList<Event> events = new ArrayList<>();
         String [] title = {"YU 96 Anniversary", "Independence Day Seminar", "YU Valentine", "Study in UK", "Google Dev Seminar","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title","Sample Event Title"};
