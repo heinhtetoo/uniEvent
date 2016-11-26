@@ -3,15 +3,16 @@ package com.sd.heinhtetoo.mytestapp;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by user on 9/10/2016.
  */
-public class ViewPodLogoutUser extends RelativeLayout implements ViewController {
+public class ViewPodLogoutUser extends RelativeLayout implements ViewController,View.OnClickListener {
+
+    private Button btnLogin;
 
     private UserController mController;
 
@@ -30,16 +31,23 @@ public class ViewPodLogoutUser extends RelativeLayout implements ViewController 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this, this);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(this);
     }
 
-    @OnClick(R.id.btn_login)
-    public void onTapLogin(View view) {
+    public void onTapLogin() {
         mController.onTapLogin();
     }
 
     @Override
     public void setController(BaseController controller) {
         mController = (UserController) controller;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.btn_login){
+            onTapLogin();
+        }
     }
 }

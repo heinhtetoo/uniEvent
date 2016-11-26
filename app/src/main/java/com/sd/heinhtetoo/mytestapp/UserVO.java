@@ -8,13 +8,11 @@ public class UserVO {
     private final String username;
     private final String email;
     private final String profile;
-    private final String profileCover;
 
-    public UserVO(String username, String email, String profile, String profileCover) {
+    public UserVO(String username, String email, String profile) {
         this.username = username;
         this.email = email;
         this.profile = profile;
-        this.profileCover = profileCover;
     }
 
     public String getUsername() {
@@ -29,7 +27,4 @@ public class UserVO {
         return profile;
     }
 
-    public String getProfileCover() {
-        return profileCover;
-    }
 }

@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -36,9 +37,8 @@ import java.util.Arrays;
 import de.greenrobot.event.EventBus;
 import io.realm.RealmList;
 
-public class MainActivity extends AppCompatActivity implements EventContract.eventView,NavigationView.OnNavigationItemSelectedListener,UserController {
-    ArrayList<Event> events;
-    private RecyclerView recyclerViewEvent;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,UserController {
+
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ViewPodAccountControl vpAccountControl;
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
     private String username;
     private String email;
     private String profileURL;
-    private String profileCoverURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,12 +108,11 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
                     }
                 });
 
-        recyclerViewEvent = (RecyclerView) findViewById(R.id.view_event);
-
-
-        EventContract.eventPresenter eventPresenter = new EventPresenter(EventModelImpl.getInstance(), this);
-
-        eventPresenter.initPresenter();
+        EventListFragment fragment = new EventListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_container,fragment)
+                .commit();
 
 
     }
@@ -130,15 +128,10 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
                 FacebookUtils.getInstance().requestFacebookProfilePhoto(accessToken, new FacebookUtils.FacebookGetPictureCallback() {
                     @Override
                     public void onSuccess(final String profilePhotoUrl) {
-                        FacebookUtils.getInstance().requestFacebookCoverPhoto(accessToken, new FacebookUtils.FacebookGetPictureCallback() {
-                            @Override
-                            public void onSuccess(final String coverPhotoUrl) {
-
-                                onLoginWithFacebook(facebookLoginUser, profilePhotoUrl, coverPhotoUrl);
 
 
-                            }
-                        });
+                                onLoginWithFacebook(facebookLoginUser, profilePhotoUrl);
+
                     }
                 });
             }
@@ -146,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
 
     }
 
-    private void onLoginWithFacebook(JSONObject facebookLoginUser, String imageUrl, String coverImageUrl ){
+    private void onLoginWithFacebook(JSONObject facebookLoginUser, String imageUrl ){
 
         try {
 
@@ -164,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
         }
 
         profileURL = imageUrl;
-        profileCoverURL = coverImageUrl;
 
         //Glide.with(ivProfile.getContext()).load(imageUrl).centerCrop().crossFade().error(R.mipmap.ic_launcher).into(ivProfile);
         //Glide.with(ivProfileCover.getContext()).load(coverImageUrl).centerCrop().crossFade().error(R.mipmap.ic_launcher).into(ivProfileCover);
@@ -173,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
     }
 
     private void setUserProfile() {
-        EventBus.getDefault().postSticky(new UserVO(username,email,profileURL,profileCoverURL));
+        EventBus.getDefault().postSticky(new UserVO(username,email,profileURL));
         DataEvent.RefreshUserLoginStatusEvent event = new DataEvent.RefreshUserLoginStatusEvent();
         EventBus.getDefault().post(event);
     }
@@ -226,20 +218,6 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
         getMenuInflater().inflate(R.menu.menu_home, menu);
 
         return true;
-    }
-
-    @Override
-    public void showList(RealmList<Event> eList) {
-        final EventsAdapter adapter = new EventsAdapter(this, eList);
-
-        recyclerViewEvent.setAdapter(adapter);
-        recyclerViewEvent.setLayoutManager(new GridLayoutManager(this, 2));
-
-    }
-
-    @Override
-    public void hideList() {
-
     }
 
     @Override

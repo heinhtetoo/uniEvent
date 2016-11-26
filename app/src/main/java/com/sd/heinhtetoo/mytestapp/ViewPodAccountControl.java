@@ -5,8 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -19,11 +17,9 @@ public class ViewPodAccountControl extends FrameLayout {
     private String profileURL;
     private String profileCoverURL;
 
-    @BindView(R.id.vp_login_user)
-    ViewPodLoginUser vpLoginUser;
+    private ViewPodLoginUser vpLoginUser;
 
-    @BindView(R.id.vp_logout_user)
-    ViewPodLogoutUser vpLogoutUser;
+    private ViewPodLogoutUser vpLogoutUser;
 
     public ViewPodAccountControl(Context context) {
         super(context);
@@ -40,7 +36,8 @@ public class ViewPodAccountControl extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this, this);
+        vpLoginUser = (ViewPodLoginUser) findViewById(R.id.vp_login_user);
+        vpLogoutUser = (ViewPodLogoutUser) findViewById(R.id.vp_logout_user);
 
         EventBus eventBus = EventBus.getDefault();
         if (!eventBus.isRegistered(this)) {
@@ -52,7 +49,6 @@ public class ViewPodAccountControl extends FrameLayout {
         username = data.getUsername();
         email = data.getEmail();
         profileURL = data.getProfile();
-        profileCoverURL = data.getProfileCover();
     }
 
     boolean isUserLogin = false;
@@ -62,7 +58,7 @@ public class ViewPodAccountControl extends FrameLayout {
         vpLoginUser.setVisibility(isUserLogin ? View.VISIBLE : View.GONE);
 
         if(isUserLogin)
-            vpLoginUser.setData(username,email,profileURL,profileCoverURL);
+            vpLoginUser.setData(username,email,profileURL);
 
     }
 

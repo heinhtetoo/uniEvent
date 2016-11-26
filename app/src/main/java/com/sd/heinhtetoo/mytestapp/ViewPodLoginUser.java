@@ -1,10 +1,12 @@
 package com.sd.heinhtetoo.mytestapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,28 +16,21 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by user on 9/10/2016.
  */
-public class ViewPodLoginUser extends RelativeLayout implements ViewController {
+public class ViewPodLoginUser extends RelativeLayout implements ViewController,View.OnClickListener {
 
-    @BindView(R.id.iv_profile_cover)
-    ImageView ivProfileCover;
+    private ImageView ivProfile;
 
-    @BindView(R.id.iv_profile)
-    ImageView ivProfile;
+    private TextView tvName;
 
-    @BindView(R.id.tv_name)
-    TextView tvName;
-
-    @BindView(R.id.tv_email)
-    TextView tvEmail;
+    private TextView tvEmail;
 
     private UserController mController;
+
+    private Button btnLogout;
 
     public ViewPodLoginUser(Context context) {
         super(context);
@@ -52,7 +47,11 @@ public class ViewPodLoginUser extends RelativeLayout implements ViewController {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this, this);
+        ivProfile = (ImageView) findViewById(R.id.iv_profile);
+        tvName = (TextView) findViewById(R.id.tv_name);
+        tvEmail = (TextView) findViewById(R.id.email);
+        btnLogout = (Button) findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(this);
     }
 
     @Override
@@ -60,20 +59,7 @@ public class ViewPodLoginUser extends RelativeLayout implements ViewController {
         mController = (UserController) controller;
     }
 
-    @OnClick(R.id.btn_logout)
-    public void onTapLogout(Button btnLogout) {
-        mController.onTapLogout();
-    }
-
-    public void setData(String username,String email,String profileURL,String profileCoverURL) {
-
-        Glide.with(getContext())
-                .load(profileCoverURL)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.drawer_background)
-                .error(R.drawable.drawer_background)
-                .into(ivProfileCover);
+    public void setData(String username,String email,String profileURL) {
 
         Glide.with(getContext())
                 .load(profileURL)
@@ -92,7 +78,24 @@ public class ViewPodLoginUser extends RelativeLayout implements ViewController {
         });
 
 
+        if(username != null ){
         tvName.setText(username);
-        tvEmail.setText(email);
+        }
+        if(email != null)
+        {
+            tvEmail.setText(email);
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.btn_logout) {
+            onTapLogout();
+        }
+    }
+
+    public void onTapLogout (){
+        mController.onTapLogout();
     }
 }
