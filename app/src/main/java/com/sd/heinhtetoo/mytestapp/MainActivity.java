@@ -21,6 +21,7 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.sd.heinhtetoo.mytestapp.data.Event;
@@ -34,7 +35,6 @@ import java.util.Arrays;
 
 import de.greenrobot.event.EventBus;
 import io.realm.RealmList;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class MainActivity extends AppCompatActivity implements EventContract.eventView,NavigationView.OnNavigationItemSelectedListener,UserController {
     ArrayList<Event> events;
@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
             }
         };
 
+        if (AccessToken.getCurrentAccessToken() != null){
+            username = Profile.getCurrentProfile().getFirstName() +""+ Profile.getCurrentProfile().getMiddleName()+""+Profile.getCurrentProfile().getLastName();
+            profileURL = Profile.getCurrentProfile().getProfilePictureUri(500,500).toString();
+            setUserProfile();
+            isUserLogin = true;
+
+        }
         LoginManager.getInstance().registerCallback(mCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -115,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
     private void processFacebookInfo(LoginResult loginResult) {
 
         final AccessToken accessToken = loginResult.getAccessToken();
+
+
         FacebookUtils.getInstance().requestFacebookLoginUser(accessToken, new FacebookUtils.FacebookGetLoginUserCallback() {
             @Override
             public void onSuccess(final JSONObject facebookLoginUser) {
@@ -126,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
                             public void onSuccess(final String coverPhotoUrl) {
 
                                 onLoginWithFacebook(facebookLoginUser, profilePhotoUrl, coverPhotoUrl);
+
 
                             }
                         });
@@ -158,6 +168,14 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
 
         //Glide.with(ivProfile.getContext()).load(imageUrl).centerCrop().crossFade().error(R.mipmap.ic_launcher).into(ivProfile);
         //Glide.with(ivProfileCover.getContext()).load(coverImageUrl).centerCrop().crossFade().error(R.mipmap.ic_launcher).into(ivProfileCover);
+       setUserProfile();
+        isUserLogin = true;
+    }
+
+    private void setUserProfile() {
+        EventBus.getDefault().postSticky(new UserVO(username,email,profileURL,profileCoverURL));
+        DataEvent.RefreshUserLoginStatusEvent event = new DataEvent.RefreshUserLoginStatusEvent();
+        EventBus.getDefault().post(event);
     }
 
     private void connectToFacebook() {
@@ -216,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
 
         recyclerViewEvent.setAdapter(adapter);
         recyclerViewEvent.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerViewEvent.setItemAnimator(new SlideInUpAnimator(new LinearInterpolator()));
 
     }
 
@@ -238,10 +255,7 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
     public void onTapLogin() {
         if(!isUserLogin) {
             connectToFacebook();
-            EventBus.getDefault().postSticky(new UserVO(username,email,profileURL,profileCoverURL));
-            DataEvent.RefreshUserLoginStatusEvent event = new DataEvent.RefreshUserLoginStatusEvent();
-            EventBus.getDefault().post(event);
-            isUserLogin = true;
+
         }
     }
 
@@ -251,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements EventContract.eve
             EventBus.clearCaches();
             DataEvent.RefreshUserLoginStatusEvent event = new DataEvent.RefreshUserLoginStatusEvent();
             EventBus.getDefault().post(event);
+
             isUserLogin = false;
         }
     }

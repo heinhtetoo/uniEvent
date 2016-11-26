@@ -12,7 +12,7 @@ import com.sd.heinhtetoo.mytestapp.data.Serializer.EventSerializer;
 
 import java.util.concurrent.TimeUnit;
 
-import io.realm.EventRealmProxy;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import okhttp3.Interceptor;
@@ -68,7 +68,7 @@ public class RetrofitClient {
                     .registerTypeAdapter(Class.forName("io.realm.EventResponseRealmProxy"), new EventResponseSerializer())
 
                     .create();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

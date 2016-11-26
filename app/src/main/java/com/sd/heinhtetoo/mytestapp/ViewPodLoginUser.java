@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import butterknife.BindView;
@@ -69,6 +70,7 @@ public class ViewPodLoginUser extends RelativeLayout implements ViewController {
         Glide.with(getContext())
                 .load(profileCoverURL)
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.drawer_background)
                 .error(R.drawable.drawer_background)
                 .into(ivProfileCover);
@@ -76,6 +78,7 @@ public class ViewPodLoginUser extends RelativeLayout implements ViewController {
         Glide.with(getContext())
                 .load(profileURL)
                 .asBitmap().centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.dummy_avatar)
                 .error(R.drawable.dummy_avatar)
                 .into(new BitmapImageViewTarget(ivProfile) {
