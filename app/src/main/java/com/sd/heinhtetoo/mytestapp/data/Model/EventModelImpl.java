@@ -1,5 +1,7 @@
 package com.sd.heinhtetoo.mytestapp.data.Model;
 
+import android.util.Log;
+
 import com.sd.heinhtetoo.mytestapp.api.RetrofitClient;
 import com.sd.heinhtetoo.mytestapp.data.Event;
 import com.sd.heinhtetoo.mytestapp.data.EventResponse;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 
 import io.realm.RealmList;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -58,6 +61,20 @@ public class EventModelImpl implements EventModel {
             }
         });
 
+    }
+
+    @Override
+    public void postEvent(Event e) {
+        RetrofitClient.getInstance().getService().postEvent(e).enqueue(new retrofit2.Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
+
+            }
+        });
     }
 
     public interface Callback {

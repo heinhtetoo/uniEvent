@@ -48,6 +48,46 @@ public class Event extends RealmObject {
     @Expose
     private String description;
 
+    @SerializedName("byUser")
+    @Expose
+    private String username;
+
+    @SerializedName("byUserid")
+    @Expose
+    private String userid;
+
+    public Event(String tags, String title, String place, String time, String date, String publishedDate, String description, String username, String userid) {
+        this.tags = tags;
+        this.title = title;
+        this.place = place;
+        this.time = time;
+        this.date = date;
+        this.publishedDate = publishedDate;
+        this.description = description;
+        this.username = username;
+        this.userid = userid;
+    }
+
+    public void setStarred(Boolean starred) {
+        this.starred = starred;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
     public String getId() {
         return id;
     }

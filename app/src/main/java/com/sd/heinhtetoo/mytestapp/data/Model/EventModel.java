@@ -14,4 +14,6 @@ public interface EventModel {
     ArrayList<Event> getEvent();
 
     void getEvent(EventModelImpl.Callback c);
+
+    void postEvent(Event e);
 }
