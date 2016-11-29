@@ -5,7 +5,10 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -51,8 +54,15 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
     private int gyear;
     private int gmonth;
 
+    TextInputLayout tilName;
+    TextInputLayout tilEventDate;
+    TextInputLayout tilEventTime;
+    TextInputLayout tilPlace;
+    TextInputLayout tilDescription;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -89,6 +99,108 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
         etEventTime = (EditText) view.findViewById(R.id.et_event_time);
         etEventTime.setOnClickListener(this);
         etEventTime.setOnFocusChangeListener(this);
+
+        tilName = (TextInputLayout) view.findViewById(R.id.til_event_name);
+        tilEventDate = (TextInputLayout) view.findViewById(R.id.til_event_date);
+        tilEventTime = (TextInputLayout) view.findViewById(R.id.til_event_time);
+        tilPlace = (TextInputLayout) view.findViewById(R.id.til_place);
+        tilDescription = (TextInputLayout) view.findViewById(R.id.til_description);
+
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()>0){
+                    tilName.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEventDate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()>0){
+                    tilEventDate.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etEventTime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()>0){
+                    tilEventTime.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPlace.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()>0){
+                    tilPlace.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().trim().length()>0){
+                    tilDescription.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         return view;
     }
 
@@ -119,7 +231,37 @@ public class AddEventDialogFragment extends DialogFragment implements View.OnCli
 
         if(name.isEmpty() || eventDate.isEmpty() || eventTime.isEmpty() || place.isEmpty() || description.isEmpty())
         {
-            Toast.makeText(getContext(),"Complete The Form",Toast.LENGTH_SHORT).show();
+            if(name.isEmpty()) {
+                tilName.setErrorEnabled(true);
+                tilName.setError("You need to enter a name");
+            }else{
+
+                //tilName.setErrorEnabled(false);
+            }
+            if(eventDate.isEmpty()){
+                tilEventDate.setErrorEnabled(true);
+                tilEventDate.setError("You need to enter event date");
+            }else{
+                tilName.setErrorEnabled(false);
+            }
+            if(eventTime.isEmpty()){
+                tilEventTime.setErrorEnabled(true);
+                tilEventTime.setError("You need to enter event time");
+            }else{
+                tilName.setErrorEnabled(false);
+            }
+            if(place.isEmpty()){
+                tilPlace.setErrorEnabled(true);
+                tilPlace.setError("You need to enter a place");
+            }else{
+                tilName.setErrorEnabled(false);
+            }
+            if(description.isEmpty()){
+                tilDescription.setErrorEnabled(true);
+                tilDescription.setError("You need to enter description about the event");
+            }else{
+                tilName.setErrorEnabled(false);
+            }
         }else
         {
             String username = Profile.getCurrentProfile().getName();

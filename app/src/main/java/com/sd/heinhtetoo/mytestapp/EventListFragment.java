@@ -1,17 +1,21 @@
 package com.sd.heinhtetoo.mytestapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.sd.heinhtetoo.mytestapp.data.Event;
 import com.sd.heinhtetoo.mytestapp.data.Model.EventModelImpl;
@@ -24,7 +28,9 @@ import io.realm.RealmList;
  * Created by Administrator's user on 26-Nov-16.
  */
 
-public class EventListFragment extends Fragment implements EventContract.eventView, View.OnClickListener {
+public class EventListFragment extends Fragment implements EventContract.eventView, View.OnClickListener,SwipeRefreshLayout.OnRefreshListener {
+
+    EventContract.eventPresenter eventPresenter;
 
     ArrayList<Event> events;
     private RecyclerView recyclerViewEvent;
@@ -32,10 +38,12 @@ public class EventListFragment extends Fragment implements EventContract.eventVi
     FloatingActionButton fab;
     CoordinatorLayout coordinatorLayout;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventContract.eventPresenter eventPresenter = new EventPresenter(EventModelImpl.getInstance(), this);
+        eventPresenter = new EventPresenter(EventModelImpl.getInstance(), this);
         eventPresenter.initPresenter();
     }
 
@@ -48,6 +56,9 @@ public class EventListFragment extends Fragment implements EventContract.eventVi
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add_event);
         fab.setOnClickListener(this);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
         return view;
     }
 
@@ -56,7 +67,7 @@ public class EventListFragment extends Fragment implements EventContract.eventVi
         final EventsAdapter adapter = new EventsAdapter(UniEventApp.getContext(), eList);
 
         recyclerViewEvent.setAdapter(adapter);
-        recyclerViewEvent.setLayoutManager(new GridLayoutManager(UniEventApp.getContext(), 2));
+        recyclerViewEvent.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
     }
 
@@ -72,5 +83,16 @@ public class EventListFragment extends Fragment implements EventContract.eventVi
             AddEventDialogFragment addEventDialogFragment = new AddEventDialogFragment();
             addEventDialogFragment.show(fragmentManager,"Add Event");
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                eventPresenter.initPresenter();
+                swipeRefreshLayout.setRefreshing(false);
+;            }
+        }, 3000);
     }
 }
